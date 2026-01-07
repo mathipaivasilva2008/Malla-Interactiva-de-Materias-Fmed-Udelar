@@ -1,0 +1,23 @@
+const completed = new Set();
+
+document.querySelectorAll('.uc').forEach(uc => {
+  uc.addEventListener('click', () => {
+    if (!uc.classList.contains('unlocked')) return;
+    if (uc.classList.contains('completed')) return;
+
+    // marcar como aprobada
+    uc.classList.add('completed');
+    completed.add(uc.id);
+
+    // desbloquear siguientes
+    const unlocks = uc.dataset.unlocks;
+    if (unlocks) {
+      unlocks.split(' ').forEach(id => {
+        const target = document.getElementById(id);
+        if (target) {
+          target.classList.add('unlocked');
+        }
+      });
+    }
+  });
+});
